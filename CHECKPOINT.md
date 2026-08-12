@@ -95,3 +95,26 @@ Comprobaciones realizadas:
 - La primera ejecución de Pytest se detuvo porque faltaba `httpx`. No fue un error de escritura y se solucionó instalando la dependencia.
 - Pytest muestra una advertencia de compatibilidad, pero la prueba se ejecuta y se aprueba correctamente.
 - La primera redirección de `pip freeze` produjo un problema de lectura por codificación. Se solucionó guardando `requirements.txt` explícitamente en UTF-8.
+
+### Control de versiones y publicación
+
+- Se inicializó un repositorio Git local con la rama `main`.
+- Se creó un archivo `.gitignore` para excluir el entorno virtual, cachés, cobertura, secretos y configuración local.
+- El repositorio público está disponible en:
+  `https://github.com/solucionesia444-lang/02_asistente_capritxets_rag`
+- La rama local `main` está conectada y sincronizada con `origin/main`.
+
+### Documentación del proyecto
+
+- Se creó `README.md` con el estado actual, tecnologías, estructura, ejecución local, pruebas, cobertura, Ruff y próximos pasos.
+- El README se comprobó correctamente en GitHub.
+- Se registraron y publicaron dos commits:
+  - `feat: completar backend minimo sin IA`
+  - `docs: agregar README del proyecto`
+
+  ### Incidencias de Git solucionadas
+
+- `git status` falló inicialmente porque la carpeta todavía no era un repositorio. Se solucionó con `git init`.
+- El primer commit se detuvo porque Git no tenía configurados el nombre y el correo del autor. Se configuraron únicamente para este repositorio.
+- Se escribió por error una URL y después `README.md` directamente en PowerShell. No se modificó ni dañó ningún archivo.
+- Se eliminó el archivo duplicado y mal escrito `requerements.txt`, conservando `requirements.txt`.
