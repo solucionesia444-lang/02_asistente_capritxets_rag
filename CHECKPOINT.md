@@ -118,3 +118,12 @@ Comprobaciones realizadas:
 - El primer commit se detuvo porque Git no tenía configurados el nombre y el correo del autor. Se configuraron únicamente para este repositorio.
 - Se escribió por error una URL y después `README.md` directamente en PowerShell. No se modificó ni dañó ningún archivo.
 - Se eliminó el archivo duplicado y mal escrito `requerements.txt`, conservando `requirements.txt`.
+
+## Bloque B1 — Base de conocimiento inicial
+
+- Se creó la carpeta `data/raw` para almacenar los documentos originales de la base de conocimiento.
+- Se crearon los archivos `store_info.md`, `products.md` y `faq.md`.
+- Los documentos contienen información real del negocio, productos, encargos, horarios, disponibilidad, precios orientativos y alérgenos.
+- La información variable, como existencias, precios y plazos, debe confirmarse presencialmente.
+- La información sobre alérgenos exige revisar el etiquetado de cada producto.
+- Los documentos se revisaron en Markdown y no presentaron errores de formato.
