@@ -127,3 +127,13 @@ Comprobaciones realizadas:
 - La información variable, como existencias, precios y plazos, debe confirmarse presencialmente.
 - La información sobre alérgenos exige revisar el etiquetado de cada producto.
 - Los documentos se revisaron en Markdown y no presentaron errores de formato.
+
+## Bloque B2 — Carga de documentos Markdown
+
+- Se creó `app/services/document_loader.py`.
+- El cargador lee en UTF-8 los archivos Markdown de una carpeta.
+- Los documentos se ordenan por nombre y devuelven su ruta y contenido.
+- Se controla el error cuando la carpeta indicada no existe.
+- Se creó `tests/test_document_loader.py` con dos pruebas automáticas.
+- Pytest: 3 pruebas aprobadas y 1 advertencia conocida.
+- Ruff: todas las comprobaciones aprobadas.
