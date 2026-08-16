@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from app.services.document_loader import load_markdown_documents
+from app.services.document_loader import load_markdown_documents, split_documents
 
 
 def test_load_markdown_documents_reads_files(tmp_path: Path) -> None:
@@ -18,3 +18,30 @@ def test_load_markdown_documents_raises_for_missing_directory(
 
   with pytest.raises(NotADirectoryError, match="No existe la carpeta"):
       load_markdown_documents(missing_directory)
+
+def test_split_documents_preserves_source_and_order() -> None:
+    documents = [
+        {
+            "path": "data/raw/faq.md",
+            "content": "Primera sección.\n\nSegunda sección.",
+
+        },
+    ]
+    chunks = split_documents(documents)
+    assert chunks == [
+        {
+            "path": "data/raw/faq.md",
+            "chunk_index": 0,
+            "content": "Primera sección.",
+        },
+        {
+            "path": "data/raw/faq.md",
+            "chunk_index": 1,
+            "content": "Segunda sección.",
+        },
+    ]
+
+def test_split_documents_ignores_empty_sections() -> None:
+    documents = [{"path": "data/raw/empty.md", "content":"\n\n"}]
+
+    assert split_documents(documents) == []
