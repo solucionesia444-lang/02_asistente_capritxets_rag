@@ -4,6 +4,7 @@ import pytest
 
 from app.services.embedding_service import (
     EMBEDDING_MODEL,
+    embed_chunks,
     get_embedding,
     get_embeddings,
 )
@@ -50,3 +51,26 @@ def test_get_embeddings_returns_embedding_for_each_chunk():
   result = get_embeddings(chunks, client=client_mock)
   assert result == [embedding_one, embedding_two]
   assert client_mock.embeddings.create.call_count == 2
+
+def test_embed_chunks_preserves_metadata_and_adds_embedding():
+    chunk = {
+    "path": "data/raw/faq.md",
+    "chunk_index": 0,
+    "content": "Primera sección",
+}
+    expected_embedding = [0.1, 0.2, 0.3]
+    embedding_item = Mock()
+    embedding_item.embedding = expected_embedding
+    response_mock = Mock()
+    response_mock.data = [embedding_item]
+    client_mock = Mock()
+    client_mock.embeddings.create.return_value = response_mock
+    result = embed_chunks([chunk], client=client_mock)
+    assert result == [
+    {
+        "path": "data/raw/faq.md",
+        "chunk_index": 0,
+        "content": "Primera sección",
+        "embedding": expected_embedding,
+    }
+]

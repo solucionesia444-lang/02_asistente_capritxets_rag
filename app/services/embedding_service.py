@@ -13,3 +13,17 @@ def get_embedding(text: str, client) -> list[float]:
 
 def get_embeddings(chunks: list[str], client) -> list[list[float]]:
     return [get_embedding(chunk, client=client) for chunk in chunks]
+
+def embed_chunks(
+    chunks: list[dict[str, str | int]],
+    client,
+) -> list[dict[str, str | int | list[float]]]:
+    embedded_chunks = []
+    for chunk in chunks:
+        embedding = get_embedding(chunk["content"], client=client)
+        embedded_chunk = {
+            **chunk,
+            "embedding": embedding,
+        }
+        embedded_chunks.append(embedded_chunk)
+    return embedded_chunks
