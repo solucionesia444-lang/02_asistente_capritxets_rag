@@ -9,4 +9,7 @@ def get_embedding(text: str, client) -> list[float]:
         model=EMBEDDING_MODEL,
         input=text,
     )
-    return response.data[0].embedding 
+    return response.data[0].embedding
+
+def get_embeddings(chunks: list[str], client) -> list[list[float]]:
+    return [get_embedding(chunk, client=client) for chunk in chunks]

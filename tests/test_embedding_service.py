@@ -2,7 +2,11 @@ from unittest.mock import Mock
 
 import pytest
 
-from app.services.embedding_service import EMBEDDING_MODEL, get_embedding
+from app.services.embedding_service import (
+    EMBEDDING_MODEL,
+    get_embedding,
+    get_embeddings,
+)
 
 
 def test_get_embedding_rejects_empty_text():
@@ -28,3 +32,21 @@ def test_get_embedding_returns_embedding_from_client():
     "model": EMBEDDING_MODEL,
     "input": test_text,
 }
+
+def test_get_embeddings_returns_embedding_for_each_chunk():
+  client_mock = Mock()
+  chunks = ["chunk uno", "chunk dos"]
+  embedding_one = [0.1, 0.2]
+  embedding_two = [0.3, 0.4]
+  embedding_item_one = Mock()
+  embedding_item_one.embedding = embedding_one
+  embedding_item_two = Mock()
+  embedding_item_two.embedding = embedding_two
+  response_one = Mock()
+  response_one.data = [embedding_item_one]
+  response_two = Mock()
+  response_two.data = [embedding_item_two]
+  client_mock.embeddings.create.side_effect = [response_one, response_two]
+  result = get_embeddings(chunks, client=client_mock)
+  assert result == [embedding_one, embedding_two]
+  assert client_mock.embeddings.create.call_count == 2
