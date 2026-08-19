@@ -41,3 +41,13 @@ def test_retrieve_top_k_returns_results_in_similarity_order():
     result = retrieve_top_k(query_embedding, chunks, k=2)
     assert result[0]["content"] == "Chunk 1"
     assert result[1]["content"] == "Chunk 2"
+
+def test_retrieve_top_k_returns_exactly_k_results():
+    query_embedding = [1.0, 0.0]
+    chunks = [
+        {"content": "Chunk 1", "embedding": [1.0, 0.0]},
+        {"content": "Chunk 2", "embedding": [0.5, 0.5]},
+        {"content": "Chunk 3", "embedding": [0.0, 1.0]},
+    ]
+    result = retrieve_top_k(query_embedding, chunks, k=2)
+    assert len(result) == 2
