@@ -15,6 +15,8 @@ def retrieve_top_k(
         chunks: list[dict],
         k: int,
 ) -> list[dict]:
+    if k < 0:
+        raise ValueError("k must be non-negative")
     scored_chunks = []
     for chunk in chunks:
         score = cosine_similarity(query_embedding, chunk["embedding"])
