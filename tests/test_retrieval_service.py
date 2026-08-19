@@ -84,3 +84,11 @@ def test_retrieve_top_k_with_negative_k():
     ]
     with pytest.raises(ValueError):
         retrieve_top_k(query_embedding, chunks, k=-1)
+
+def test_retrieve_top_k_with_missing_embedding():
+    query_embedding = [1.0, 0.0]
+    chunks = [
+        {"content": "Chunk 1"},
+    ]
+    with pytest.raises(KeyError):
+        retrieve_top_k(query_embedding, chunks, k=1)
