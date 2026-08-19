@@ -10,3 +10,15 @@ def cosine_similarity(
     
     return dot_product / (magnitude_a * magnitude_b)
 
+def retrieve_top_k(
+        query_embedding: list[float],
+        chunks: list[dict],
+        k: int,
+) -> list[dict]:
+    scored_chunks = []
+    for chunk in chunks:
+        score = cosine_similarity(query_embedding, chunk["embedding"])
+        scored_chunks.append((score, chunk))
+
+    scored_chunks.sort(key=lambda item: item[0], reverse=True)
+    return [chunk for _, chunk in scored_chunks[:k]]

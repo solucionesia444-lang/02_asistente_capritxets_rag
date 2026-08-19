@@ -1,6 +1,6 @@
 import pytest
 
-from app.services.retrieval_service import cosine_similarity
+from app.services.retrieval_service import cosine_similarity, retrieve_top_k
 
 
 def test_cosine_similarity_identical_vectors():
@@ -20,3 +20,13 @@ def test_cosine_similarity_rejects_zero_vector():
     vector_b = [1.0, 0.0]
     with pytest.raises(ValueError):
         cosine_similarity(vector_a, vector_b)
+
+def test_retrieve_top_k_returns_most_similar_chunk():
+    query_embedding = [1.0, 0.0]
+    chunks = [
+        {"content": "Chunk 1", "embedding": [1.0, 0.0]},
+        {"content": "Chunk 2", "embedding": [0.0, 1.0]},
+        {"content": "Chunk 3", "embedding": [0.5, 0.5]},
+    ]
+    result = retrieve_top_k(query_embedding, chunks, k=1)
+    assert result[0]["content"] == "Chunk 1"
