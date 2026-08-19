@@ -68,4 +68,10 @@ def test_retrieve_top_k_when_k_exceeds_chunks():
         {"content": "Chunk 2", "embedding": [0.5, 0.5]},
     ]
     result = retrieve_top_k(query_embedding, chunks, k=5)
-    assert len(result) == len(chunks)
+    assert len(result) == 2
+
+def test_retrieve_top_k_with_empty_chunks():
+    query_embedding = [1.0, 0.0]
+    chunks = []
+    result = retrieve_top_k(query_embedding, chunks, k=3)
+    assert result == []
