@@ -100,3 +100,9 @@ def test_retrieve_top_k_with_mismatched_embedding_dimensions():
     ]
     with pytest.raises(ValueError):
         retrieve_top_k(query_embedding, chunks, k=1)
+
+def test_retrieve_top_k_with_empty_query_embedding():
+    query_embedding = []
+    chunks = [{"text": "Chunk 1", "embedding": [0.1, 0.2]}]
+    with pytest.raises(ValueError):
+        retrieve_top_k(query_embedding, chunks, k=1)
