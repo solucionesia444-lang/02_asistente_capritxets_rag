@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+import pytest
+
 from app.services.rag_service import retrieve_context
 
 
@@ -54,4 +56,14 @@ def test_retrieve_context_with_empty_chunks():
                 query_embedding, chunks, k=3
             )
 
+def test_retrieve_context_does_not_retrieve_when_embedding_fails():
+  query = "¿Qué productos ofrecéis?"
+  chunks = [{"content": "Tartas de chuches", "embedding": [0.1, 0.2]}]
+  client = object()
+  with patch("app.services.rag_service.get_embedding") as mock_get_embedding:
+    mock_get_embedding.side_effect = RuntimeError("embedding failed")
+    with patch("app.services.rag_service.retrieve_top_k") as mock_retrieve_top_k:
+      with pytest.raises(RuntimeError, match="embedding failed"):
+          retrieve_context(query, chunks, client)
+      mock_retrieve_top_k.assert_not_called()
             
