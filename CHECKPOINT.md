@@ -137,3 +137,13 @@ Comprobaciones realizadas:
 - Se creó `tests/test_document_loader.py` con dos pruebas automáticas.
 - Pytest: 3 pruebas aprobadas y 1 advertencia conocida.
 - Ruff: todas las comprobaciones aprobadas.
+
+## Bloque B3 — Embeddings, retrieval y servicio RAG
+
+- Se integró `app/services/embedding_service.py` para generar embeddings mediante el cliente de OpenAI.
+- Se implementó `app/services/retrieval_service.py` para calcular similitud y recuperar los chunks más relevantes.
+- Se creó `app/services/rag_service.py` para coordinar embedding + retrieval y devolver el contexto relevante de una consulta.
+  - Se añadieron pruebas unitarias con mocks para aislar llamadas externas y evitar consumo innecesario de API durante el testing.
+  - Estado actual del testing: 28 tests pasando; `rag_service.py` queda cubierto con 5 tests y no requiere un test #6 adicional.
+- Cobertura actual verificada con `coverage`: 266 statements, 0 líneas sin cubrir, 100% en los módulos ejecutados por la suite.
+- Ruff: todas las comprobaciones aprobadas y repositorio sincronizado con `origin/main`.
