@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from app.services.rag_service import retrieve_context
+from app.services.rag_service import answer_query, retrieve_context
 
 
 def test_retrieve_context_uses_embedding_and_retrieval():
@@ -84,3 +84,20 @@ def test_retrieve_context_propagates_retrieval_failure():
             mock_retrieve_top_k.assert_called_once_with(
                 query_embedding, chunks, k=3
             )
+
+def test_answer_query_retrieves_context_and_generates_answer():
+  query = "¿Tenéis tartas?"
+  chunks = [{"content": "Tenemos tartas personalizadas."}]
+  client = object()
+  context = [{"content": "Tenemos tartas personalizadas."}]
+
+  with patch("app.services.rag_service.retrieve_context") as mock_retrieve_context:
+      mock_retrieve_context.return_value = context
+
+      with patch("app.services.rag_service.generate_answer") as mock_generate_answer:
+          mock_generate_answer.return_value = "Sí, tenemos tartas personalizadas."
+
+          result = answer_query(query, chunks, client)
+
+          assert result == "Sí, tenemos tartas personalizadas."
+          mock_retrieve_context.assert_called_once_with(query, chunks, client)
