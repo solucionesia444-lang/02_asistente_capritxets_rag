@@ -14,15 +14,18 @@ def test_health_check() -> None:
     assert response.json() == {"status": "ok"}
 
 def test_rag_endpoint_returns_answer():
-  with patch("app.main.answer_query") as mock_answer_query:
-      mock_answer_query.return_value = "Sí, tenemos tartas personalizadas."
+    with patch("app.main.get_embedded_chunks") as mock_get_embedded_chunks:
+        mock_get_embedded_chunks.return_value = []
 
-      response = client.post(
-          "/rag",
-          json={"query": "¿Tenéis tartas?"},
-      )
+        with patch("app.main.answer_query") as mock_answer_query:
+            mock_answer_query.return_value = "Sí, tenemos tartas personalizadas."
 
-      assert response.status_code == 200
-      assert response.json() == {
-          "answer": "Sí, tenemos tartas personalizadas."
-      }
+            response = client.post(
+                "/rag",
+                json={"query": "¿Tenéis tartas?"},
+            )
+
+            assert response.status_code == 200
+            assert response.json() == {
+                "answer": "Sí, tenemos tartas personalizadas."
+            }
