@@ -33,7 +33,10 @@ def test_rag_endpoint_returns_answer():
 def test_get_embedded_chunks_uses_cache():
     cached_chunks = [{"content": "Tartas", "embedding": [0.1, 0.2]}]
 
-    with patch("app.main.embed_chunks") as mock_embed_chunks:
+    with (
+        patch("app.main.embedded_chunks", None),
+        patch("app.main.embed_chunks") as mock_embed_chunks,
+    ):
         mock_embed_chunks.return_value = cached_chunks
 
         first_result = get_embedded_chunks()
