@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from app.main import app
+from app.main import app, get_embedded_chunks
 
 client = TestClient(app)
 
@@ -28,4 +28,17 @@ def test_rag_endpoint_returns_answer():
             assert response.status_code == 200
             assert response.json() == {
                 "answer": "Sí, tenemos tartas personalizadas."
-            }
+            }    
+
+def test_get_embedded_chunks_uses_cache():
+    cached_chunks = [{"content": "Tartas", "embedding": [0.1, 0.2]}]
+
+    with patch("app.main.embed_chunks") as mock_embed_chunks:
+        mock_embed_chunks.return_value = cached_chunks
+
+        first_result = get_embedded_chunks()
+        second_result = get_embedded_chunks()
+
+        assert first_result == cached_chunks
+        assert second_result == cached_chunks
+        assert mock_embed_chunks.call_count == 1
