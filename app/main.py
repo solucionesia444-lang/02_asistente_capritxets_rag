@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.core.openai_client import client
 from app.services.rag_service import answer_query
 
 app = FastAPI(
@@ -16,6 +17,6 @@ def rag_endpoint(payload: dict[str, str]) -> dict[str, str]:
     answer = answer_query(
         payload["query"],
         [],
-        None,
+       client,
     )
     return {"answer": answer}
