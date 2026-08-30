@@ -1,7 +1,9 @@
 from unittest.mock import patch
 
+import pytest
 from fastapi.testclient import TestClient
 
+import app.main as main_module
 from app.main import app, get_embedded_chunks
 
 client = TestClient(app)
@@ -45,3 +47,12 @@ def test_get_embedded_chunks_uses_cache():
         assert first_result == cached_chunks
         assert second_result == cached_chunks
         assert mock_embed_chunks.call_count == 1
+        
+def test_get_embedded_chunks_keeps_cache_empty_if_embedding_fails():
+    with (
+        patch("app.main.embedded_chunks", None),
+        patch("app.main.embed_chunks", side_effect=RuntimeError("Embedding failed")),
+    ):
+        with pytest.raises(RuntimeError, match="Embedding failed"):
+            get_embedded_chunks()
+        assert main_module.embedded_chunks is None
