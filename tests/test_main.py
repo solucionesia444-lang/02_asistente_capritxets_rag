@@ -32,6 +32,26 @@ def test_rag_endpoint_returns_answer():
                 "answer": "Sí, tenemos tartas personalizadas."
             }    
 
+def test_rag_endpoint_passes_embedded_chunks_to_answer_query():
+  embedded_chunks = [
+      {"content": "Tartas personalizadas", "embedding": [0.1, 0.2]}
+  ]
+
+  with (
+      patch("app.main.get_embedded_chunks", return_value=embedded_chunks),
+      patch("app.main.answer_query", return_value="Respuesta") as mock_answer_query,
+  ):
+      client.post(
+          "/rag",
+          json={"query": "¿Tenéis tartas?"},
+      )
+
+      mock_answer_query.assert_called_once_with(
+          "¿Tenéis tartas?",
+          embedded_chunks,
+          main_module.client,
+      )            
+
 def test_get_embedded_chunks_uses_cache():
     cached_chunks = [{"content": "Tartas", "embedding": [0.1, 0.2]}]
 
