@@ -32,6 +32,14 @@ def test_rag_endpoint_returns_answer():
                 "answer": "Sí, tenemos tartas personalizadas."
             }    
 
+def test_rag_endpoint_rejects_missing_query():
+    response = client.post(
+        "/rag",
+        json={},
+    )
+
+    assert response.status_code == 422
+
 def test_rag_endpoint_passes_embedded_chunks_to_answer_query():
   embedded_chunks = [
       {"content": "Tartas personalizadas", "embedding": [0.1, 0.2]}
