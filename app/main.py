@@ -10,7 +10,7 @@ from app.services.rag_service import answer_query
 
 
 class RagRequest(BaseModel):
-    query: str= Field(min_length=1)
+    query: str= Field(min_length=1, pattern=r".*\S.*")
 
 documents = load_markdown_documents(Path("data/raw"))
 chunks = split_documents(documents)

@@ -50,7 +50,19 @@ def test_rag_endpoint_rejects_empty_query():
             json={"query": ""},
         )
 
-    assert response.status_code == 422    
+    assert response.status_code == 422   
+
+def test_rag_endpoint_rejects_whitespace_query():
+    with (
+        patch("app.main.get_embedded_chunks", return_value=[]),
+        patch("app.main.answer_query", return_value="Respuesta"),
+    ):
+        response = client.post(
+            "/rag",
+            json={"query": "   "},
+        )
+
+    assert response.status_code == 422     
 
 def test_rag_endpoint_passes_embedded_chunks_to_answer_query():
   embedded_chunks = [
