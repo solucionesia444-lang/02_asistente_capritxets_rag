@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.core.openai_client import client
 from app.services.document_loader import load_markdown_documents, split_documents
@@ -10,7 +10,7 @@ from app.services.rag_service import answer_query
 
 
 class RagRequest(BaseModel):
-    query: str
+    query: str= Field(min_length=1)
 
 documents = load_markdown_documents(Path("data/raw"))
 chunks = split_documents(documents)
