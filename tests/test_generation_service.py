@@ -1,5 +1,7 @@
 from unittest.mock import Mock
 
+import pytest
+
 from app.services.generation_service import generate_answer
 
 
@@ -28,3 +30,14 @@ def test_generate_answer_sends_query_and_context_to_model():
     call_kwargs = client.responses.create.call_args.kwargs
     assert "¿Tenéis tartas?" in call_kwargs["input"]
     assert "Tenemos tartas personalizadas." in call_kwargs["input"]
+
+def test_generate_answer_propagates_client_failure():
+    client = Mock()
+    client.responses.create.side_effect = RuntimeError("client failed")
+
+    with pytest.raises(RuntimeError, match="client failed"):
+        generate_answer(
+            "¿Tenéis tartas?",
+            ["Tenemos tartas personalizadas."],
+            client=client,
+        )
