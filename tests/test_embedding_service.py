@@ -2,6 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
+from app.core.exceptions import ExternalServiceError
 from app.services.embedding_service import (
     EMBEDDING_MODEL,
     embed_chunks,
@@ -74,3 +75,10 @@ def test_embed_chunks_preserves_metadata_and_adds_embedding():
         "embedding": expected_embedding,
     }
 ]
+
+def test_get_embedding_raises_external_service_error_on_client_failure():
+  client_mock = Mock()
+  client_mock.embeddings.create.side_effect = RuntimeError("provider failed")
+
+  with pytest.raises(ExternalServiceError):
+      get_embedding("Hola", client=client_mock)
