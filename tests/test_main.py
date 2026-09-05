@@ -3,6 +3,7 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 import app.main as main_module
+from app.core.exceptions import ExternalServiceError
 from app.main import app
 
 client = TestClient(app)
@@ -81,4 +82,22 @@ def test_rag_endpoint_passes_embedded_chunks_to_answer_query():
           "¿Tenéis tartas?",
           embedded_chunks,
           main_module.client,
-      )            
+      )
+
+def test_rag_endpoint_returns_503_when_external_service_fails():
+  with (
+      patch("app.main.get_embedded_chunks", return_value=[]),
+      patch(
+          "app.main.answer_query",
+          side_effect=ExternalServiceError("secret provider detail"),
+      ),
+  ):
+      response = client.post(
+          "/rag",
+          json={"query": "¿Tenéis tartas?"},
+      )
+
+  assert response.status_code == 503
+  assert response.json() == {
+      "detail": "External service temporarily unavailable"
+  }            

@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
+from app.core.exceptions import ExternalServiceError
 from app.core.openai_client import client
 from app.schemas.rag import RagRequest
 from app.services.knowledge_base_service import get_embedded_chunks
@@ -16,9 +17,16 @@ def health_check() -> dict[str, str]:
 
 @app.post("/rag")
 def rag_endpoint(payload: RagRequest) -> dict[str, str]:
-    answer = answer_query(
-        payload.query,
-        get_embedded_chunks(),
-       client,
-    )
+    try:
+       answer = answer_query(
+          payload.query,
+          get_embedded_chunks(),
+          client,
+        )
+    except ExternalServiceError as exc:
+        raise HTTPException(
+        status_code=503,
+        detail="External service temporarily unavailable",
+    ) from exc
+
     return {"answer": answer}
