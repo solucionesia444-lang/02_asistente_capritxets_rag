@@ -100,4 +100,23 @@ def test_rag_endpoint_returns_503_when_external_service_fails():
   assert response.status_code == 503
   assert response.json() == {
       "detail": "External service temporarily unavailable"
-  }            
+  } 
+
+def test_rag_endpoint_returns_503_when_embedding_service_fails():
+  with (
+      patch(
+          "app.main.get_embedded_chunks",
+          side_effect=ExternalServiceError("secret embedding provider detail"),
+      ),
+      patch("app.main.answer_query") as mock_answer_query,
+  ):
+      response = client.post(
+          "/rag",
+          json={"query": "¿Tenéis tartas?"},
+      )
+
+  assert response.status_code == 503
+  assert response.json() == {
+      "detail": "External service temporarily unavailable"
+  }
+  mock_answer_query.assert_not_called()           
