@@ -97,6 +97,7 @@ Ejecutar todas las pruebas automatizadas con:
 Estado actual:
 
 - 43 pruebas automatizadas pasando correctamente.
+- Cobertura actual del código: `100%` .
 - Tests unitarios sobre servicios.
 - Tests de integración del endpoint `/rag`.
 - Validación de errores `422`.
