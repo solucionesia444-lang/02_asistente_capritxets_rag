@@ -88,6 +88,32 @@ La API estará disponible en:
 - RAG: `http://127.0.0.1:8000/rag`
 - Documentación interactiva: `http://127.0.0.1:8000/docs`
 
+## Ejemplo de uso de `/rag`
+
+Solicitud:
+
+` ```json
+{
+  "query": "¿Tenéis tartas?"
+} `
+
+
+Respuesta esperada:
+
+` ```json
+{
+  "answer": "Sí, tenemos tartas personalizadas."
+} ```
+
+El endpoint utiliza la consulta del usuario para:
+
+1. Generar el embedding de la pregunta.
+2. Recuperar los fragmentos más relevantes de la base de conocimiento.
+3. Construir el contexto.
+4. Enviar pregunta y contexto al modelo de lenguaje.
+5. Devolver una respuesta fundamentada en la información recuperada.
+
+
 ## Pruebas
 
 Ejecutar todas las pruebas automatizadas con:
