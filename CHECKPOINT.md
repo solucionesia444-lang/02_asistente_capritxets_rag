@@ -1,3 +1,153 @@
+# CHECKPOINT ACTUAL — Asistente Capritxets RAG
+
+## Fecha de actualización
+
+6 de septiembre de 2026
+
+## Estado del proyecto
+
+El núcleo técnico del asistente RAG está funcional y estable.
+
+Estado verificado:
+
+- 43 pruebas automatizadas pasando.
+- Cobertura de código: 100 %.
+- Ruff: todas las comprobaciones aprobadas.
+- Rama `main` sincronizada con `origin/main`.
+- Working tree limpio.
+- README actualizado con la arquitectura actual.
+
+## Arquitectura implementada
+
+El flujo principal del sistema es:
+
+Consulta del usuario
+→ FastAPI `/rag`
+→ validación con Pydantic
+→ base de conocimiento
+→ embeddings
+→ retrieval semántico
+→ contexto relevante
+→ generación de respuesta
+→ respuesta HTTP
+
+Servicios principales:
+
+- `document_loader.py`: carga y división de documentos.
+- `embedding_service.py`: generación de embeddings.
+- `knowledge_base_service.py`: preparación y caché de chunks embebidos.
+- `retrieval_service.py`: recuperación del contexto relevante.
+- `rag_service.py`: coordinación del flujo RAG.
+- `generation_service.py`: generación de respuesta con el modelo.
+- `exceptions.py`: errores controlados de servicios externos.
+- `rag.py`: esquema de validación de entrada.
+- `main.py`: endpoints y manejo HTTP.
+
+## Endpoints
+
+### GET /health
+
+Comprueba que la API está operativa.
+
+Respuesta esperada:
+
+`{"status": "ok"}`
+
+### POST /rag
+
+Recibe una consulta:
+
+`{"query": "¿Tenéis tartas?"}`
+
+y devuelve una respuesta generada utilizando el contexto recuperado de la base de conocimiento.
+
+## Validaciones
+
+El endpoint `/rag` controla:
+
+- query obligatoria.
+- query vacía.
+- query formada únicamente por espacios.
+- errores de validación HTTP 422.
+
+## Manejo de errores externos
+
+Se creó `ExternalServiceError` para desacoplar los errores internos de los proveedores externos.
+
+Comportamiento actual:
+
+- Fallo de embeddings → `ExternalServiceError`.
+- Fallo de generación → `ExternalServiceError`.
+- `/rag` transforma esos fallos en HTTP 503.
+- No se filtran al cliente mensajes internos ni detalles del proveedor.
+- Si falla la preparación de embeddings, `answer_query()` no se ejecuta.
+
+## Caché de embeddings
+
+`knowledge_base_service.py` mantiene los chunks embebidos en caché.
+
+Esto evita volver a generar embeddings innecesariamente durante la ejecución.
+
+También está probado que, si la generación de embeddings falla, la caché permanece vacía y no queda almacenado un estado inválido.
+
+## Testing
+
+Suite actual:
+
+- 43 tests pasando.
+- 100 % de cobertura sobre `app`.
+- Tests unitarios de servicios.
+- Tests de integración del endpoint `/rag`.
+- Mocks para evitar llamadas externas durante testing.
+- Tests de errores 422.
+- Tests de errores 503.
+- Tests de propagación de fallos.
+- Tests de caché.
+- Tests de retrieval.
+- Tests de generación.
+- Tests de embeddings.
+
+Comandos principales:
+
+`python -m pytest -q`
+
+`python -m pytest --cov=app --cov-report=term-missing`
+
+`.\.venv\Scripts\ruff.exe check .`
+
+## Estado Git
+
+Último estado confirmado:
+
+- Rama: `main`
+- Sincronizada con `origin/main`
+- `nothing to commit, working tree clean`
+
+## Fase actual
+
+El desarrollo del núcleo RAG está prácticamente terminado.
+
+El proyecto entra ahora en fase de cierre y preparación para portfolio.
+
+## Trabajo pendiente
+
+Prioridades siguientes:
+
+1. Añadir ejemplos de uso del endpoint `/rag`.
+2. Documentar visualmente la arquitectura.
+3. Preparar Docker.
+4. Añadir CI/CD para ejecutar tests y Ruff automáticamente.
+5. Incorporar evaluación del sistema RAG.
+6. Añadir métricas de retrieval y generación.
+7. Preparar despliegue.
+8. Preparar demostración para portfolio y entrevistas técnicas.
+
+---
+
+# HISTÓRICO DEL PROYECTO
+
+A continuación se conserva el checkpoint original y la evolución inicial del proyecto.
+
 # CHECKPOINT — Asistente Capritxets RAG
 
 ## Información general
