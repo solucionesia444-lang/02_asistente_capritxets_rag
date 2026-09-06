@@ -3,6 +3,7 @@ from unittest.mock import patch
 import pytest
 
 import app.services.knowledge_base_service as knowledge_base_module
+from app.core.exceptions import ExternalServiceError
 from app.services.knowledge_base_service import get_embedded_chunks
 
 
@@ -14,10 +15,10 @@ def test_get_embedded_chunks_keeps_cache_empty_if_embedding_fails():
         ),
         patch(
             "app.services.knowledge_base_service.embed_chunks",
-            side_effect=RuntimeError("Embedding failed"),
+            side_effect=ExternalServiceError("Embedding failed"),
         ),
     ):
-        with pytest.raises(RuntimeError, match="Embedding failed"):
+        with pytest.raises(ExternalServiceError, match="Embedding failed"):
             get_embedded_chunks()
 
         assert knowledge_base_module.embedded_chunks is None
