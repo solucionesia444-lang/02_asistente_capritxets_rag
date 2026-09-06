@@ -1,42 +1,80 @@
 # Asistente Capritxets RAG
+Asistente de atención al cliente para Capritxets desarrollado con FastAPI y una arquitectura RAG (Retrieval-Augmented Generation).
 
-Asistente de atención al cliente para Capritxets, desarrollado con FastAPI y preparado para incorporar una arquitectura RAG.
+El sistema utiliza una base de conocimiento propia del negocio, divide la documentación en fragmentos, genera embeddings, recupera el contexto más relevante para cada consulta y utiliza un modelo de lenguaje para generar la respuesta final.
 
 ## Estado actual
 
-El proyecto cuenta con un backend mínimo sin IA que incluye:
+El proyecto cuenta actualmente con un backend RAG funcional que incluye:
 
-- Aplicación FastAPI funcional.
-- Endpoint `GET /health`.
-- Documentación automática en `/docs`.
-- Primera prueba automática con Pytest.
-- Cobertura actual del 100 % en `app/main.py`.
-- Control de calidad con Ruff.
+- API desarrollada con FastAPI.
+- Endpoint `GET /health` para comprobar el estado del servicio.
+- Endpoint `POST /rag` para realizar consultas al asistente.
+- Validación de entrada con Pydantic.
+- Carga automática de documentos Markdown.
+- División de documentos en fragmentos.
+- Generación de embeddings.
+- Caché de embeddings para evitar procesamiento innecesario.
+- Recuperación semántica del contexto más relevante.
+- Generación de respuestas utilizando un modelo de lenguaje.
+- Separación de responsabilidades mediante servicios independientes.
+- Manejo de errores de servicios externos mediante `ExternalServiceError`.
+- Respuesta HTTP `503` segura cuando un proveedor externo no está disponible.
+- Protección frente a filtración de detalles internos del proveedor.
+- Pruebas unitarias y de integración con pytest.
+- 43 pruebas automatizadas pasando correctamente.
+- Control de calidad del código con Ruff.
+- Documentación interactiva automática mediante Swagger en `/docs`.
 
 ## Tecnologías
 
 - Python 3.14.3
 - FastAPI
 - Uvicorn
-- Pydantic Settings
+- Pydantic / Pydantic Settings
+- OpenAI API
+- Embeddings
+- Arquitectura RAG
 - Pytest
 - Pytest-cov
 - Ruff
 - HTTPX
+- unittest.mock
 
 ## Estructura actual
-
 ```text
 app/
+├── core/
+│   ├── exceptions.py
+│   └── openai_client.py
+├── schemas/
+│   └── rag.py
+├── services/
+│   ├── document_loader.py
+│   ├── embedding_service.py
+│   ├── generation_service.py
+│   ├── knowledge_base_service.py
+│   ├── rag_service.py
+│   └── retrieval_service.py
 └── main.py
 
+data/
+└── raw/
+    └── documentos de la base de conocimiento
+
 tests/
-└── test_main.py
+├── test_document_loader.py
+├── test_embedding_service.py
+├── test_generation_service.py
+├── test_knowledge_base_service.py
+├── test_main.py
+├── test_rag_service.py
+└── test_retrieval_service.py
 
 CHECKPOINT.md
 README.md
-requirements.txt
 ```
+requirements.txt
 
 ## Ejecución local
 
@@ -47,13 +85,23 @@ Con el entorno virtual activado, iniciar la API con:
 La API estará disponible en:
 
 - Salud: `http://127.0.0.1:8000/health`
-- Documentación: `http://127.0.0.1:8000/docs`
+- RAG: `http://127.0.0.1:8000/rag`
+- Documentación interactiva: `http://127.0.0.1:8000/docs`
 
 ## Pruebas
 
-Ejecutar las pruebas automáticas con:
+Ejecutar todas las pruebas automatizadas con:
 
-`python -m pytest -v`
+`python -m pytest -q`
+
+Estado actual:
+
+- 43 pruebas automatizadas pasando correctamente.
+- Tests unitarios sobre servicios.
+- Tests de integración del endpoint `/rag`.
+- Validación de errores `422`.
+- Validación de errores externos `503`.
+- Comprobación de que no se filtran detalles internos del proveedor.
 
 Para medir la cobertura:
 
@@ -67,8 +115,11 @@ Comprobar el código con Ruff:
 
 ## Próximos pasos
 
-- Incorporar la base de conocimiento de Capritxets.
-- Dividir los documentos en fragmentos.
-- Generar embeddings.
-- Implementar la recuperación de información.
-- Integrar el modelo de lenguaje.
+- Añadir métricas de cobertura y calidad al README.
+- Mejorar la documentación de arquitectura y decisiones técnicas.
+- Añadir ejemplos de uso del endpoint `/rag`.
+- Preparar el proyecto para despliegue.
+- Incorporar Docker para facilitar la ejecución en otros entornos.
+- Añadir CI/CD para ejecutar tests y Ruff automáticamente.
+- Evaluar métricas de calidad de recuperación y generación.
+- Preparar una versión demostrable para portfolio y entrevistas técnicas.
