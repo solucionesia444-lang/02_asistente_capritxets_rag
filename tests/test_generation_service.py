@@ -2,6 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
+from app.core.exceptions import ExternalServiceError
 from app.services.generation_service import generate_answer
 
 
@@ -35,7 +36,7 @@ def test_generate_answer_propagates_client_failure():
     client = Mock()
     client.responses.create.side_effect = RuntimeError("client failed")
 
-    with pytest.raises(RuntimeError, match="client failed"):
+    with pytest.raises(ExternalServiceError):
         generate_answer(
             "¿Tenéis tartas?",
             ["Tenemos tartas personalizadas."],
