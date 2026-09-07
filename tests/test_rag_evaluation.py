@@ -51,3 +51,16 @@ def test_hit_rate_returns_fraction_of_successful_cases():
     results = [True, False, True, True]
 
     assert hit_rate(results) == 0.75
+
+def test_business_evaluation_case_can_be_scored_with_hit_at_k():
+  retrieved_chunks = [
+      {"content": "Las tartas de chuches deben solicitarse con uno o dos días de anticipación."},
+      {"content": "Capritxets abre de lunes a viernes de 09:30 a 19:00."},
+  ]
+
+  result = hit_at_k(
+      retrieved_chunks,
+      expected_text="uno o dos días de anticipación",
+  )
+
+  assert result is True
