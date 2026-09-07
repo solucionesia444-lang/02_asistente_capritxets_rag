@@ -88,3 +88,6 @@ def test_hit_rate_over_multiple_business_cases():
   ]
 
   assert hit_rate(results) == 2 / 3
+
+def test_hit_rate_with_empty_results_returns_zero():
+  assert hit_rate([]) == 0.0
