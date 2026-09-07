@@ -14,3 +14,9 @@ def hit_rate(results: list[bool]) -> float:
       return 0.0
 
   return sum(results) / len(results)
+
+def answer_contains_expected_text(
+    answer: str,
+    expected_text: str,
+) -> bool:
+    return expected_text.lower() in answer.lower()

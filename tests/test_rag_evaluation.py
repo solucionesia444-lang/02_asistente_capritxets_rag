@@ -91,3 +91,15 @@ def test_hit_rate_over_multiple_business_cases():
 
 def test_hit_rate_with_empty_results_returns_zero():
   assert hit_rate([]) == 0.0
+
+def test_answer_contains_expected_text_returns_true():
+    from app.services.rag_evaluation_service import answer_contains_expected_text
+
+    answer = "Las tartas de chuches deben solicitarse con uno o dos días de anticipación."
+
+    result = answer_contains_expected_text(
+        answer,
+        expected_text="uno o dos días de anticipación",
+    )
+
+    assert result is True
