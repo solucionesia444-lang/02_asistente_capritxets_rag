@@ -105,6 +105,17 @@ Respuesta esperada:
   "answer": "Sí, tenemos tartas personalizadas."
 } ```
 
+### Ejemplo ejecutable desde PowerShell
+
+Con la API levantada localmente en `http://127.0.0.1:8000`, ejecutar:
+
+```powershell
+Invoke-RestMethod `
+  -Uri "http://127.0.0.1:8000/rag" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body '{"query":"\u00bfTen\u00e9is tartas?"}'
+
 El endpoint utiliza la consulta del usuario para:
 
 1. Generar el embedding de la pregunta.
