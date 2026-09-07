@@ -189,11 +189,10 @@ El proyecto entra ahora en fase de cierre y preparación para portfolio.
 
 Prioridades siguientes:
 
-1. Añadir métricas de calidad de generación.
-2. Revisar seguridad y configuración para producción.
-3. Preparar el frontend o interfaz visual del asistente.
-4. Preparar despliegue y entrega continua (CD).
-5. Preparar demostración para portfolio y entrevistas técnicas.
+1. Preparar el frontend o interfaz visual del asistente.
+2. Revisar configuración restante para producción.
+3. Preparar despliegue y entrega continua (CD).
+4. Preparar demostración para portfolio y entrevistas técnicas.
 
 Completado recientemente:
 
@@ -208,7 +207,9 @@ Completado recientemente:
 - Casos de evaluación basados en información real del negocio.
 - Evaluación multi-caso del retrieval.
 - Manejo del caso vacío en `Hit Rate`.
-- Suite actual: 50 tests aprobados.
+- Métrica básica de calidad de generación.
+- Validación obligatoria de `OPENAI_API_KEY`.
+- Suite actual: 52 tests aprobados.
 
 ---
 
