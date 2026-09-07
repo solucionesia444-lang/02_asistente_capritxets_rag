@@ -43,3 +43,11 @@ def test_hit_at_k_returns_false_when_expected_content_is_not_retrieved():
     )
 
     assert result is False
+
+    
+def test_hit_rate_returns_fraction_of_successful_cases():
+    from app.services.rag_evaluation_service import hit_rate
+
+    results = [True, False, True, True]
+
+    assert hit_rate(results) == 0.75

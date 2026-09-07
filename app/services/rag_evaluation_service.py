@@ -8,3 +8,6 @@ def hit_at_k(
         expected in chunk["content"].lower()
         for chunk in retrieved_chunks
     )
+
+def hit_rate(results: list[bool]) -> float:
+  return sum(results) / len(results)
