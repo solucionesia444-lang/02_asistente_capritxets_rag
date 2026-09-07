@@ -1,6 +1,62 @@
 # CHECKPOINT ACTUAL — Asistente Capritxets RAG
 
 ## Fecha de actualización
+  Fecha: 7 de septiembre de 2026
+
+### Docker
+
+- `Dockerfile` creado y verificado.
+- Imagen Docker construida correctamente.
+- API ejecutada correctamente dentro del contenedor.
+- `GET /health` comprobado desde Docker.
+- `POST /rag` comprobado desde Docker.
+
+### Docker Compose
+
+- `docker-compose.yml` creado y validado.
+- Servicio `api` configurado.
+- Variables de entorno cargadas mediante `.env`.
+- API levantada correctamente con `docker compose up --build`.
+- `GET /health` y `POST /rag` comprobados desde Docker Compose.
+
+### Integración continua — GitHub Actions
+
+Se creó:
+
+`.github/workflows/ci.yml`
+
+El workflow se ejecuta automáticamente en:
+
+- `push`
+- `pull_request`
+
+Pipeline actual:
+
+Push / Pull Request
+→ GitHub Actions
+→ Ubuntu runner
+→ Python 3.14
+→ instalación de dependencias
+→ `python -m pytest`
+→ 43 tests aprobados
+→ `ruff check .`
+→ CI aprobado
+
+Durante la configuración del CI se diagnosticaron y solucionaron:
+
+- `ModuleNotFoundError: No module named 'app'`.
+- Ausencia de `OPENAI_API_KEY` en el runner de GitHub Actions.
+
+La clave utilizada en CI es una clave ficticia exclusiva para testing.
+
+Resultado final:
+
+- 43 tests pasando.
+- Ruff aprobado.
+- GitHub Actions en verde.
+- Rama `main` sincronizada con `origin/main`.
+
+## Fecha de actualización
 
 6 de septiembre de 2026
 
