@@ -142,11 +142,11 @@ Comprobar el código con Ruff:
 
 ## Próximos pasos
 
-- Añadir métricas de cobertura y calidad al README.
-- Mejorar la documentación de arquitectura y decisiones técnicas.
-- Añadir ejemplos de uso del endpoint `/rag`.
-- Preparar el proyecto para despliegue.
-- Incorporar Docker para facilitar la ejecución en otros entornos.
-- Añadir CI/CD para ejecutar tests y Ruff automáticamente.
-- Evaluar métricas de calidad de recuperación y generación.
-- Preparar una versión demostrable para portfolio y entrevistas técnicas.
+- Ampliar los ejemplos de uso del endpoint `/rag` con ejemplos ejecutables.
+- Documentar visualmente la arquitectura y las decisiones técnicas.
+- Incorporar evaluación del sistema RAG.
+- Añadir métricas de calidad de retrieval y generación.
+- Revisar seguridad y configuración para producción.
+- Preparar el frontend o interfaz visual del asistente.
+- Preparar despliegue y entrega continua (CD).
+- Preparar una demostración profesional para portfolio y entrevistas técnicas.
