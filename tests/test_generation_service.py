@@ -18,7 +18,9 @@ def test_generate_answer_returns_model_response():
 
   assert result == "Tenemos tartas de chuches."
 
-def test_generate_answer_sends_query_and_context_to_model():
+def test_generate_answer_sends_query_and_context_to_model(monkeypatch):
+    monkeypatch.setenv("OPENAI_MODEL", "test-model")
+    
     client = Mock()
     client.responses.create.return_value.output_text = "Respuesta"
 
@@ -29,7 +31,7 @@ def test_generate_answer_sends_query_and_context_to_model():
     )
 
     call_kwargs = client.responses.create.call_args.kwargs
-    assert "model" in call_kwargs
+    assert call_kwargs["model"] == "test-model"
     assert "¿Tenéis tartas?" in call_kwargs["input"]
     assert "Tenemos tartas personalizadas." in call_kwargs["input"]
 
