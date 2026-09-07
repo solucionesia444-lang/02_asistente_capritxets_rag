@@ -76,6 +76,24 @@ README.md
 ```
 requirements.txt
 
+## Flujo de arquitectura
+
+Usuario
+  ↓
+POST /rag
+  ↓
+Validación con Pydantic
+  ↓
+Generación del embedding de la consulta
+  ↓
+Retrieval semántico
+  ↓
+Contexto relevante
+  ↓
+Generación de respuesta con el modelo
+  ↓
+Respuesta HTTP
+
 ## Ejecución local
 
 Con el entorno virtual activado, iniciar la API con:
