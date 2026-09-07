@@ -189,20 +189,26 @@ El proyecto entra ahora en fase de cierre y preparación para portfolio.
 
 Prioridades siguientes:
 
-1. Añadir ejemplos de uso del endpoint `/rag`.
-2. Documentar visualmente la arquitectura.
-3. Incorporar evaluación del sistema RAG.
-4. Añadir métricas de retrieval y generación.
-5. Revisar seguridad y configuración para producción.
-6. Preparar el frontend o interfaz visual del asistente.
-7. Preparar despliegue y entrega continua (CD).
-8. Preparar demostración para portfolio y entrevistas técnicas.
+1. Añadir métricas de calidad de generación.
+2. Revisar seguridad y configuración para producción.
+3. Preparar el frontend o interfaz visual del asistente.
+4. Preparar despliegue y entrega continua (CD).
+5. Preparar demostración para portfolio y entrevistas técnicas.
 
 Completado recientemente:
 
 - Docker.
 - Docker Compose.
 - Integración continua (CI) con GitHub Actions.
+- Ejemplo ejecutable del endpoint `/rag` desde PowerShell.
+- Documentación del flujo de arquitectura RAG.
+- Evaluación inicial del sistema RAG.
+- Métrica de retrieval `Hit@K`.
+- Métrica agregada `Hit Rate`.
+- Casos de evaluación basados en información real del negocio.
+- Evaluación multi-caso del retrieval.
+- Manejo del caso vacío en `Hit Rate`.
+- Suite actual: 50 tests aprobados.
 
 ---
 
