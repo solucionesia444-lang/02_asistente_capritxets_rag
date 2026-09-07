@@ -191,12 +191,18 @@ Prioridades siguientes:
 
 1. Añadir ejemplos de uso del endpoint `/rag`.
 2. Documentar visualmente la arquitectura.
-3. Preparar Docker.
-4. Añadir CI/CD para ejecutar tests y Ruff automáticamente.
-5. Incorporar evaluación del sistema RAG.
-6. Añadir métricas de retrieval y generación.
-7. Preparar despliegue.
+3. Incorporar evaluación del sistema RAG.
+4. Añadir métricas de retrieval y generación.
+5. Revisar seguridad y configuración para producción.
+6. Preparar el frontend o interfaz visual del asistente.
+7. Preparar despliegue y entrega continua (CD).
 8. Preparar demostración para portfolio y entrevistas técnicas.
+
+Completado recientemente:
+
+- Docker.
+- Docker Compose.
+- Integración continua (CI) con GitHub Actions.
 
 ---
 
