@@ -1,6 +1,24 @@
+import {useState} from 'react'
 import './App.css'
 
 function App() {
+  const [ query, setQuery] = useState('')
+
+  const [messages, setMessages] = useState([])
+
+  const handleSubmit = (event) => {
+  event.preventDefault()
+
+  if (!query.trim()) {
+    return
+  }
+  
+  setMessages([...messages, { role: 'user', content: query }])
+  setQuery('')
+  
+  console.log('Consulta enviada:', query)
+}
+
   return (
     <main className="app-shell">
       <section className="chat-card">
@@ -10,17 +28,30 @@ function App() {
         </header>
 
         <section className="chat-messages">
-          <article className="message assistant-message">
-            Hola, soy tu asistente virtual de Capritxets. ¿En qué puedo ayudarte?
-          </article>
-        </section>
+            <article className="message assistant-message">
+              Hola, soy tu asistente virtual de Capritxets. ¿En qué puedo ayudarte?
+            </article>
 
-        <form className="chat-form">
+            {messages.map((message, index) => (
+              <article
+                key={index}
+                className={`message ${
+                  message.role === 'user' ? 'user-message' : 'assistant-message'
+                }`}
+              >
+                {message.content}
+              </article>
+            ))}
+          </section>
+
+        <form className="chat-form" onSubmit={handleSubmit}>
           <input
-            type="text"
-            placeholder="Escribe tu pregunta..."
-            aria-label="Escribe tu pregunta"
-          />
+              type="text"
+              placeholder="Escribe tu pregunta..."
+              aria-label="Escribe tu pregunta"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
           <button type="submit">Enviar</button>
         </form>
       </section>

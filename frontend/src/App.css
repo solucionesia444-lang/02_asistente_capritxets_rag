@@ -39,6 +39,9 @@
 
 .chat-messages {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   padding: 28px;
   background: #fffdf9;
 }
@@ -56,6 +59,12 @@
   border-bottom-left-radius: 6px;
 }
 
+.user-message {
+  margin-left: auto;
+  background: #879d87;
+  color: white;
+  border-bottom-right-radius: 6px;
+}
 .chat-form {
   display: flex;
   gap: 12px;
