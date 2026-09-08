@@ -7,6 +7,16 @@ def generate_answer(query, context, client):
     try:
         response = client.responses.create(
             model=os.getenv("OPENAI_MODEL", "gpt-5-mini"),
+            instructions=(
+            "Eres el asistente virtual de Capritxets. "
+            "Responde únicamente preguntas relacionadas con Capritxets, "
+            "sus productos, servicios, horarios, pedidos, encargos, alérgenos "
+            "y la información proporcionada en el contexto. "
+            "No inventes información ni prometas buscar datos externos. "
+            "Si la pregunta está fuera del ámbito de Capritxets, indícalo "
+            "amablemente y redirige al usuario hacia temas relacionados con el negocio."
+        ), 
+
             input=f"Pregunta: {query}\nContexto: {' '.join(context)}",
         )
     except Exception as exc:

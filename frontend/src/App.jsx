@@ -13,6 +13,8 @@ function App() {
 
   const messagesEndRef = useRef(null)
 
+  const inputRef = useRef(null)
+
   useEffect(() => {
   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isLoading, error])
@@ -54,6 +56,7 @@ catch {
   setError('No hemos podido obtener una respuesta. Inténtalo de nuevo.')
 } finally {
   setIsLoading(false)
+  inputRef.current?.focus()
 }
   console.log('Consulta enviada:', query)
 }
@@ -98,11 +101,13 @@ catch {
 
         <form className="chat-form" onSubmit={handleSubmit}>
           <input
+              ref={inputRef}
               type="text"
               placeholder="Escribe tu pregunta..."
               aria-label="Escribe tu pregunta"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
+              disabled={isLoading}
             />
           <button type="submit" disabled={isLoading || !query.trim()}>
             {isLoading ? 'Enviando...' : 'Enviar'}
