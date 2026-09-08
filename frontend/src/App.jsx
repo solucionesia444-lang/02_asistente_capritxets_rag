@@ -6,6 +6,10 @@ function App() {
 
   const [messages, setMessages] = useState([])
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [error, setError] = useState(null)
+
   const handleSubmit = async (event) => {
   event.preventDefault()
 
@@ -13,9 +17,12 @@ function App() {
     return
   }
   
+  setIsLoading(true)
+  setError('')
   setMessages([...messages, { role: 'user', content: query }])
   setQuery('')
-  
+
+  try { 
   const response = await fetch('http://127.0.0.1:8000/rag', {
     method: 'POST',
     headers: {
@@ -25,13 +32,18 @@ function App() {
   })
 
   const data = await response.json()
-  
+
 setMessages((currentMessages) => [
   ...currentMessages,
   { role: 'assistant', content: data.answer },
 ])
-  console.log(data)
+}
 
+catch {
+  setError('No hemos podido obtener una respuesta. Inténtalo de nuevo.')
+} finally {
+  setIsLoading(false)
+}
   console.log('Consulta enviada:', query)
 }
 
@@ -58,6 +70,19 @@ setMessages((currentMessages) => [
                 {message.content}
               </article>
             ))}
+
+            {isLoading && (
+              <article className="message assistant-message">
+                 Escribiendo...
+                </article>
+                )}
+
+            {error && (
+              <article className="message assistant-message">
+                {error}
+              </article>
+            )}
+
           </section>
 
         <form className="chat-form" onSubmit={handleSubmit}>
@@ -68,7 +93,9 @@ setMessages((currentMessages) => [
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
-          <button type="submit">Enviar</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Enviando...' : 'Enviar'}
+          </button>
         </form>
       </section>
     </main>
