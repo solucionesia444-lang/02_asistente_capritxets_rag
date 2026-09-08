@@ -6,7 +6,7 @@ function App() {
 
   const [messages, setMessages] = useState([])
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
   event.preventDefault()
 
   if (!query.trim()) {
@@ -16,6 +16,22 @@ function App() {
   setMessages([...messages, { role: 'user', content: query }])
   setQuery('')
   
+  const response = await fetch('http://127.0.0.1:8000/rag', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ query }),
+  })
+
+  const data = await response.json()
+  
+setMessages((currentMessages) => [
+  ...currentMessages,
+  { role: 'assistant', content: data.answer },
+])
+  console.log(data)
+
   console.log('Consulta enviada:', query)
 }
 

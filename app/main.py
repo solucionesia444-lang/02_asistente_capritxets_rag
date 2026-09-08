@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.exceptions import ExternalServiceError
 from app.core.openai_client import client
@@ -9,6 +10,14 @@ from app.services.rag_service import answer_query
 app = FastAPI(
     title="Asistente Capritxets RAG",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/health", tags=["Health"])
