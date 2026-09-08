@@ -92,7 +92,7 @@ catch {
                 )}
 
             {error && (
-              <article className="message assistant-message">
+              <article className="message error-message">
                 {error}
               </article>
             )}

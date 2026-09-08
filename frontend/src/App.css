@@ -59,6 +59,13 @@
   border-bottom-left-radius: 6px;
 }
 
+.error-message {
+  background: #fbe9e7;
+  color: #8a3f39;
+  border: 1px solid #e7c4bf;
+  border-bottom-left-radius: 6px;
+}
+
 .user-message {
   margin-left: auto;
   background: #879d87;
