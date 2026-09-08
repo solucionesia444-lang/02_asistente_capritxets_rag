@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import './App.css'
 
 function App() {
@@ -9,6 +9,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
 
   const [error, setError] = useState(null)
+
+  const messagesEndRef = useRef(null)
+
+  useEffect(() => {
+  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, isLoading, error])
 
   const handleSubmit = async (event) => {
   event.preventDefault()
@@ -82,7 +88,7 @@ catch {
                 {error}
               </article>
             )}
-
+          <div ref={messagesEndRef} />  
           </section>
 
         <form className="chat-form" onSubmit={handleSubmit}>
