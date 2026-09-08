@@ -37,7 +37,7 @@ function App() {
     },
     body: JSON.stringify({ query }),
   })
-  
+
   if (!response.ok) {
     throw new Error('Error al consultar el asistente')
   }
