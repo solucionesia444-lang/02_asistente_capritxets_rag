@@ -20,7 +20,7 @@ function App() {
   const handleSubmit = async (event) => {
   event.preventDefault()
 
-  if (!query.trim()) {
+  if (!query.trim() || isLoading) {
     return
   }
   
@@ -104,7 +104,7 @@ catch {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
-          <button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading || !query.trim()}>
             {isLoading ? 'Enviando...' : 'Enviar'}
           </button>
         </form>
