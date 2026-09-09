@@ -14,7 +14,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://zero2-asistente-capritxets-rag.onrender.com"],
+    allow_origins=["http://localhost:5173", "https://zero2-asistente-capritxets-rag-1.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
