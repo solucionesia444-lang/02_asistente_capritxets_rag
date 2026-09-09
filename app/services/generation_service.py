@@ -22,6 +22,9 @@ def generate_answer(query, context, client):
             "con temas relacionados con Capritxets y redirige al usuario hacia el negocio."
             "No menciones al usuario el contexto recuperado, documentos internos, apartados, chunks ni material disponible. "
             "Responde de forma natural como asistente de Capritxets. "
+            "Cuando una información no esté confirmada, no hagas preguntas de seguimiento al cliente para intentar obtenerla. "
+            "No pidas que indique otro producto, variante, encargo o dato para seguir buscando. "
+            "Limítate a decir que la información no está confirmada y recomienda contactar directamente con Capritxets cuando sea necesario. "
         ), 
 
             input=f"Pregunta: {query}\nContexto: {' '.join(context)}",
