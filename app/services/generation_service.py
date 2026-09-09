@@ -20,6 +20,8 @@ def generate_answer(query, context, client):
             "Si la pregunta está fuera del ámbito de Capritxets, responde de forma breve, "
             "en una o dos frases como máximo, indica amablemente que solo puedes ayudar "
             "con temas relacionados con Capritxets y redirige al usuario hacia el negocio."
+            "No menciones al usuario el contexto recuperado, documentos internos, apartados, chunks ni material disponible. "
+            "Responde de forma natural como asistente de Capritxets. "
         ), 
 
             input=f"Pregunta: {query}\nContexto: {' '.join(context)}",
